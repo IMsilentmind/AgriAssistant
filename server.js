@@ -3,8 +3,6 @@ dotenv.config();
 
 import express from "express";
 import cors from "cors";
-import multer from "multer";
-import fs from "fs";
 import OpenAI from "openai";
 
 const app = express();
@@ -16,39 +14,63 @@ const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-app.post("/api/diagnose", async (req, res) => {
-  try {
-    const { category, formData, symptoms } = req.body;
+function offlineDiagnosis(category, symptoms) {
+  return {
+    diagnosis_name: "Offline Diagnosis",
+    confidence: "low",
+    severity: "unknown",
+    explanation: `Based on offline analysis: ${symptoms}`,
+    organic_treatment: "Inspect plant, remove affected parts, improve hygiene.",
+    chemical_treatment: "Use appropriate local agricultural treatment if needed.",
+    prevention_tips: "Monitor crops regularly and avoid overwatering."
+  };
+}
 
-    const prompt = `
-You are an expert agricultural assistant.
+app.post("/api/diagnose", async (req, res) => {
+  const { category, symptoms } = req.body || {};
+
+  if (!category || !symptoms) {
+    return res.status(400).json({
+      diagnosis_name: "Invalid Request",
+      confidence: "low",
+      severity: "unknown",
+      explanation: "Missing category or symptoms.",
+      organic_treatment: "",
+      chemical_treatment: "",
+      prevention_tips: ""
+    });
+  }
+
+  if (!process.env.OPENAI_API_KEY) {
+    const offline = offlineDiagnosis(category, symptoms);
+    return res.json(offline);
+  }
+
+  const prompt = `
+You are an expert agricultural pathologist.
 
 Category: ${category}
+Symptoms: ${symptoms}
 
-Details:
-${JSON.stringify(formData, null, 2)}
-
-Symptoms:
-${symptoms}
-
-Respond in JSON with:
+Return ONLY valid JSON in this format:
 {
-  "diagnosis_name":"",
-  "confidence":"",
-  "severity":"",
-  "explanation":"",
-  "organic_treatment":"",
-  "chemical_treatment":"",
-  "prevention_tips":""
+  "diagnosis_name": "",
+  "confidence": "low|medium|high",
+  "severity": "mild|moderate|severe",
+  "explanation": "",
+  "organic_treatment": "",
+  "chemical_treatment": "",
+  "prevention_tips": ""
 }
 `;
 
+  try {
     const response = await client.responses.create({
       model: "gpt-4.1-mini",
-      input: prompt
+      input: prompt,
     });
 
-    const text = response.output_text;
+    let text = response.output_text;
 
     let result;
 
@@ -56,29 +78,20 @@ Respond in JSON with:
       result = JSON.parse(text);
     } catch {
       result = {
-        diagnosis_name: "AI Response",
+        diagnosis_name: "AI Diagnosis",
         confidence: "medium",
         severity: "moderate",
         explanation: text,
-        organic_treatment: "See explanation above.",
+        organic_treatment: "Follow best agricultural practices.",
         chemical_treatment: "Consult local supplier.",
         prevention_tips: "Monitor regularly."
       };
     }
 
-    res.json(result);
-
+    return res.json(result);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      diagnosis_name: "Error",
-      confidence: "low",
-      severity: "moderate",
-      explanation: "AI diagnosis failed.",
-      organic_treatment: "",
-      chemical_treatment: "",
-      prevention_tips: ""
-    });
+    const offline = offlineDiagnosis(category, symptoms);
+    return res.json(offline);
   }
 });
 

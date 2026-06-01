@@ -13,15 +13,25 @@ import {
   Zap,
   WifiOff,
   Wifi,
-  AlertTriangle,
 } from "lucide-react";
 
 import SubjectForm from "@/components/diagnose/SubjectForm";
 import ImageUploader from "@/components/diagnose/ImageUploader";
 import SymptomInput from "@/components/diagnose/SymptomInput";
 
-import { getOfflineDiagnosis } from "@/lib/offlineRules";
 import { useNetworkStatus } from "@/lib/networkStatus";
+
+const diagnoseCrop = async (payload) => {
+  const response = await fetch("http://localhost:5000/api/diagnose", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  return await response.json();
+};
 
 export default function Diagnose() {
   const navigate = useNavigate();
@@ -59,82 +69,52 @@ export default function Diagnose() {
     setStep(1);
   };
 
-  // ✅ FIXED & FULLY WORKING VERSION
   const handleAnalyze = async () => {
+  try {
     setAnalyzing(true);
-    setAnalyzeStage("Preparing diagnosis...");
+    setAnalyzeStage("Connecting to AI server...");
 
-    try {
-      let diagnosisResult;
+    const res = await diagnoseCrop({
+      category,
+      symptoms,
+    });
 
-      // OFFLINE MODE
-      if (isOffline || isPoorConnection) {
-        setAnalyzeStage("Using offline diagnosis...");
+    console.log("Response received:", res);
 
-        diagnosisResult = getOfflineDiagnosis(
-          category,
-          symptoms,
-          formData.subject_type
-        );
-      } else {
-        // ONLINE MODE (FIXED API CALL)
-        setAnalyzeStage("Connecting to AI server...");
+    setAnalyzing(false);
 
-        const response = await fetch("http://localhost:5000/api/diagnose", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            category: category,
-            description: symptoms,
-          }),
-        });
-
-        if (!response.ok) {
-          throw new Error("Server error");
-        }
-
-        const data = await response.json();
-
-        diagnosisResult = {
-          diagnosis_name: "AI Analysis Complete",
-          confidence: "medium",
-          severity: "moderate",
-          explanation: data.result,
-          organic_treatment:
-            "Follow AI guidance carefully.",
-          chemical_treatment:
-            "Consult local supplier if symptoms worsen.",
-          prevention_tips:
-            "Monitor regularly and maintain healthy conditions.",
-        };
-      }
-
-      console.log("Diagnosis Result:", diagnosisResult);
-
-      alert(diagnosisResult.explanation);
-    } catch (error) {
-      console.error("Diagnosis error:", error);
-      alert("Diagnosis failed. Check terminal and browser console.");
-    } finally {
+    console.log("Spinner stopped");
       setAnalyzing(false);
-      setAnalyzeStage("");
+
+      navigate("/result", {
+        state: {
+          result: {
+            diagnosis_name: res.diagnosis_name || "AI Diagnosis",
+            confidence: res.confidence || "medium",
+            severity: res.severity || "moderate",
+            explanation: res.explanation || res.result || "",
+            organic_treatment: res.organic_treatment || "",
+            chemical_treatment: res.chemical_treatment || "",
+            prevention_tips: res.prevention_tips || "",
+          },
+        },
+      });
+    } catch (error) {
+      setAnalyzing(false);
+      console.error(error);
+      alert("Diagnosis failed. Check backend.");
     }
   };
 
   return (
     <div className="px-4 py-6 max-w-2xl mx-auto">
-
-      {/* Back */}
       <button
         onClick={() => (step > 0 ? setStep(step - 1) : navigate("/"))}
-        className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground mb-4 transition-colors"
+        className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground mb-4"
       >
         <ArrowLeft className="w-4 h-4" /> Back
       </button>
 
-      {/* Network status */}
       <AnimatePresence>
         {(isOffline || isPoorConnection) && (
           <motion.div
@@ -143,8 +123,8 @@ export default function Diagnose() {
             exit={{ opacity: 0, y: -8 }}
             className={`flex items-center gap-2.5 rounded-xl px-4 py-2.5 mb-4 text-sm font-medium ${
               isOffline
-                ? "bg-destructive/10 text-destructive"
-                : "bg-secondary/15 text-secondary"
+                ? "bg-red-100 text-red-700"
+                : "bg-yellow-100 text-yellow-700"
             }`}
           >
             {isOffline ? (
@@ -162,7 +142,6 @@ export default function Diagnose() {
         )}
       </AnimatePresence>
 
-      {/* Progress */}
       <div className="flex gap-2 mb-6">
         {[0, 1, 2].map((s) => (
           <div
@@ -175,43 +154,32 @@ export default function Diagnose() {
       </div>
 
       <AnimatePresence mode="wait">
-
-        {/* STEP 0 */}
         {step === 0 && (
-          <motion.div
-            key="s0"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-          >
+          <motion.div key="s0" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             <h2 className="text-xl font-bold">Choose Category</h2>
-            <p className="text-sm text-muted-foreground">
-              What are you diagnosing today?
-            </p>
 
             <div className="grid grid-cols-2 gap-3 mt-4">
-
-              <button onClick={() => handleCategorySelect("crops")} className="p-6 border rounded-2xl">
+              <button
+                onClick={() => handleCategorySelect("crops")}
+                className="p-6 border rounded-2xl"
+              >
                 <Sprout className="w-8 h-8 text-primary mx-auto" />
-                <p className="font-bold text-center mt-2">Crops</p>
+                <p className="text-center mt-2">Crops</p>
               </button>
 
-              <button onClick={() => handleCategorySelect("livestock")} className="p-6 border rounded-2xl">
+              <button
+                onClick={() => handleCategorySelect("livestock")}
+                className="p-6 border rounded-2xl"
+              >
                 <Bug className="w-8 h-8 text-secondary mx-auto" />
-                <p className="font-bold text-center mt-2">Livestock</p>
+                <p className="text-center mt-2">Livestock</p>
               </button>
-
             </div>
           </motion.div>
         )}
 
-        {/* STEP 1 */}
         {step === 1 && (
-          <motion.div
-            key="s1"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
+          <motion.div key="s1">
             <h2 className="text-xl font-bold">
               {category === "crops" ? "Crop Details" : "Animal Details"}
             </h2>
@@ -232,7 +200,6 @@ export default function Diagnose() {
           </motion.div>
         )}
 
-        {/* STEP 2 */}
         {step === 2 && (
           <motion.div key="s2">
             <h2 className="text-xl font-bold">Add Evidence</h2>
@@ -267,7 +234,6 @@ export default function Diagnose() {
             </Button>
           </motion.div>
         )}
-
       </AnimatePresence>
     </div>
   );
