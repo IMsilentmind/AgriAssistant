@@ -17,12 +17,12 @@ const client = new OpenAI({
 function offlineDiagnosis(category, symptoms) {
   return {
     diagnosis_name: "Offline Diagnosis",
-    confidence: "low",
-    severity: "unknown",
-    explanation: `Based on offline analysis: ${symptoms}`,
-    organic_treatment: "Inspect plant, remove affected parts, improve hygiene.",
-    chemical_treatment: "Use appropriate local agricultural treatment if needed.",
-    prevention_tips: "Monitor crops regularly and avoid overwatering."
+    confidence: "medium",
+    severity: "moderate",
+    explanation: `Offline analysis for ${category}: ${symptoms}`,
+    organic_treatment: "Inspect affected area, remove damaged parts.",
+    chemical_treatment: "Use local treatment if needed.",
+    prevention_tips: "Monitor regularly and maintain hygiene.",
   };
 }
 
@@ -30,33 +30,30 @@ app.post("/api/diagnose", async (req, res) => {
   const { category, symptoms } = req.body || {};
 
   if (!category || !symptoms) {
-    return res.status(400).json({
-      diagnosis_name: "Invalid Request",
+    return res.json({
+      diagnosis_name: "Invalid Input",
       confidence: "low",
-      severity: "unknown",
+      severity: "low",
       explanation: "Missing category or symptoms.",
       organic_treatment: "",
       chemical_treatment: "",
-      prevention_tips: ""
+      prevention_tips: "",
     });
   }
 
-  if (!process.env.OPENAI_API_KEY) {
-    const offline = offlineDiagnosis(category, symptoms);
-    return res.json(offline);
-  }
-
   const prompt = `
-You are an expert agricultural pathologist.
+You are an expert agricultural assistant.
 
 Category: ${category}
-Symptoms: ${symptoms}
 
-Return ONLY valid JSON in this format:
+Symptoms:
+${symptoms}
+
+Return ONLY valid JSON:
 {
   "diagnosis_name": "",
-  "confidence": "low|medium|high",
-  "severity": "mild|moderate|severe",
+  "confidence": "",
+  "severity": "",
   "explanation": "",
   "organic_treatment": "",
   "chemical_treatment": "",
@@ -65,12 +62,16 @@ Return ONLY valid JSON in this format:
 `;
 
   try {
+    if (!process.env.OPENAI_API_KEY) {
+      return res.json(offlineDiagnosis(category, symptoms));
+    }
+
     const response = await client.responses.create({
       model: "gpt-4.1-mini",
       input: prompt,
     });
 
-    let text = response.output_text;
+    const text = response.output_text;
 
     let result;
 
@@ -78,20 +79,20 @@ Return ONLY valid JSON in this format:
       result = JSON.parse(text);
     } catch {
       result = {
-        diagnosis_name: "AI Diagnosis",
+        diagnosis_name: "AI Response",
         confidence: "medium",
         severity: "moderate",
         explanation: text,
-        organic_treatment: "Follow best agricultural practices.",
-        chemical_treatment: "Consult local supplier.",
-        prevention_tips: "Monitor regularly."
+        organic_treatment: "See explanation.",
+        chemical_treatment: "Consult supplier.",
+        prevention_tips: "Monitor regularly.",
       };
     }
 
     return res.json(result);
   } catch (error) {
-    const offline = offlineDiagnosis(category, symptoms);
-    return res.json(offline);
+    console.log("AI failed, switching to offline mode:", error.message);
+    return res.json(offlineDiagnosis(category, symptoms));
   }
 });
 
