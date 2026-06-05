@@ -1,5 +1,5 @@
 export async function diagnoseCrop(data) {
-  const response = await fetch("http://localhost:5000/api/diagnose", {
+  const response = await fetch("https://agriassistant-3afj.onrender.com/api/diagnose") {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
