@@ -22,13 +22,20 @@ import SymptomInput from "@/components/diagnose/SymptomInput";
 import { useNetworkStatus } from "@/lib/networkStatus";
 
 const diagnoseCrop = async (payload) => {
-  const response = await fetch("http://localhost:5000/api/diagnose", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  });
+  const response = await fetch(
+    "https://agriassistant-3afj.onrender.com/api/diagnose",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Diagnosis request failed");
+  }
 
   return await response.json();
 };
@@ -70,20 +77,15 @@ export default function Diagnose() {
   };
 
   const handleAnalyze = async () => {
-  try {
-    setAnalyzing(true);
-    setAnalyzeStage("Connecting to AI server...");
+    try {
+      setAnalyzing(true);
+      setAnalyzeStage("Connecting to AI server...");
 
-    const res = await diagnoseCrop({
-      category,
-      symptoms,
-    });
+      const res = await diagnoseCrop({
+        category,
+        symptoms,
+      });
 
-    console.log("Response received:", res);
-
-    setAnalyzing(false);
-
-    console.log("Spinner stopped");
       setAnalyzing(false);
 
       navigate("/result", {
