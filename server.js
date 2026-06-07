@@ -15,6 +15,10 @@ app.use(
   })
 );
 app.use(express.json());
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
 
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -94,6 +98,7 @@ Return ONLY valid JSON:
         prevention_tips: "Monitor regularly.",
       };
     }
+
 
     return res.json(result);
   } catch (error) {
