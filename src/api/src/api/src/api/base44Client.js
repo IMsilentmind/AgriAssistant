@@ -1,18 +1,26 @@
 export async function diagnoseCrop(data) {
-  const response = await fetch(
-    "https://agriassistant-3afj.onrender.com/api/diagnose",
-    {
+  const url = "https://agriassistant-3afj.onrender.com/api/diagnose";
+
+  alert("Sending diagnosis request to backend...");
+
+  try {
+    const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
+    });
+
+    alert("Backend responded");
+
+    if (!response.ok) {
+      throw new Error("Backend responded with error");
     }
-  );
 
-  if (!response.ok) {
-    throw new Error("Diagnosis request failed");
+    return await response.json();
+  } catch (error) {
+    alert("Phone error: " + error.message);
+    throw error;
   }
-
-  return await response.json();
 }
