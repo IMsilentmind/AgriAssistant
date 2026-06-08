@@ -14,8 +14,10 @@ app.use(
     allowedHeaders: ["Content-Type"],
   })
 );
+
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.url}`);
   next();
@@ -38,7 +40,7 @@ function offlineDiagnosis(category, symptoms) {
 }
 
 app.post("/api/diagnose", async (req, res) => {
- const { category, symptoms, imageUrl } = req.body || {};
+  const { category, symptoms, imageUrl } = req.body || {};
 
   if (!category || !symptoms) {
     return res.json({
@@ -60,6 +62,8 @@ Category: ${category}
 Symptoms:
 ${symptoms}
 
+If an image is provided, analyse the visible crop or animal condition carefully.
+
 Return ONLY valid JSON:
 {
   "diagnosis_name": "",
@@ -78,21 +82,21 @@ Return ONLY valid JSON:
     }
 
     const input = imageUrl
-  ? [
-      {
-        role: "user",
-        content: [
-          { type: "input_text", text: prompt },
-          { type: "input_image", image_url: imageUrl },
-        ],
-      },
-    ]
-  : prompt;
+      ? [
+          {
+            role: "user",
+            content: [
+              { type: "input_text", text: prompt },
+              { type: "input_image", image_url: imageUrl },
+            ],
+          },
+        ]
+      : prompt;
 
-const response = await client.responses.create({
-  model: "gpt-4.1-mini",
-  input,
-});
+    const response = await client.responses.create({
+      model: imageUrl ? "gpt-4.1" : "gpt-4.1-mini",
+      input,
+    });
 
     const text = response.output_text;
 
@@ -111,7 +115,6 @@ const response = await client.responses.create({
         prevention_tips: "Monitor regularly.",
       };
     }
-
 
     return res.json(result);
   } catch (error) {
