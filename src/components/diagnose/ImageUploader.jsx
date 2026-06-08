@@ -16,21 +16,26 @@ export default function ImageUploader({ imageUrl, onImageUploaded }) {
     setUploading(true);
     setCompressionInfo(null);
 
-    const originalSize = file.size;
-    // Compress to save bandwidth on poor connections
-    const compressed = await compressImage(file, 1024, 0.72);
-    const compressedSize = compressed.size;
+    try {
+      const originalSize = file.size;
+      const compressed = await compressImage(file, 1024, 0.72);
+      const compressedSize = compressed.size;
 
-    if (compressedSize < originalSize) {
-      setCompressionInfo({
-        original: formatBytes(originalSize),
-        compressed: formatBytes(compressedSize),
-        saved: Math.round((1 - compressedSize / originalSize) * 100),
-      });
+      if (compressedSize < originalSize) {
+        setCompressionInfo({
+          original: formatBytes(originalSize),
+          compressed: formatBytes(compressedSize),
+          saved: Math.round((1 - compressedSize / originalSize) * 100),
+        });
+      }
+
+      const previewUrl = URL.createObjectURL(compressed);
+      onImageUploaded(previewUrl);
+    } catch (error) {
+      console.error(error);
+      alert("Image could not be loaded.");
     }
 
-    const { file_url } = await base44.integrations.Core.UploadFile({ file: compressed });
-    onImageUploaded(file_url);
     setUploading(false);
   };
 
@@ -53,17 +58,27 @@ export default function ImageUploader({ imageUrl, onImageUploaded }) {
             exit={{ opacity: 0, scale: 0.95 }}
             className="relative rounded-2xl overflow-hidden border"
           >
-            <img src={imageUrl} alt="Uploaded" className="w-full h-48 object-cover" />
+            <img
+              src={imageUrl}
+              alt="Uploaded"
+              className="w-full h-48 object-cover"
+            />
+
             <button
-              onClick={() => { onImageUploaded(""); setCompressionInfo(null); }}
+              onClick={() => {
+                onImageUploaded("");
+                setCompressionInfo(null);
+              }}
               className="absolute top-3 right-3 w-8 h-8 bg-foreground/70 rounded-full flex items-center justify-center text-background hover:bg-foreground/90 transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
+
             <div className="absolute bottom-3 left-3 flex items-center gap-1.5 bg-primary/90 text-primary-foreground text-xs font-medium px-3 py-1.5 rounded-full">
               <CheckCircle2 className="w-3.5 h-3.5" />
               Photo ready
             </div>
+
             {compressionInfo && (
               <div className="absolute bottom-3 right-3 bg-foreground/60 text-background text-[10px] px-2 py-1 rounded-full">
                 {compressionInfo.saved}% smaller · {compressionInfo.compressed}
@@ -71,7 +86,12 @@ export default function ImageUploader({ imageUrl, onImageUploaded }) {
             )}
           </motion.div>
         ) : (
-          <motion.div key="upload" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+          <motion.div
+            key="upload"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
             <Button
               variant="outline"
               onClick={() => fileInputRef.current?.click()}
@@ -81,16 +101,23 @@ export default function ImageUploader({ imageUrl, onImageUploaded }) {
               {uploading ? (
                 <div className="flex flex-col items-center gap-2">
                   <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
-                  <span className="text-sm text-muted-foreground">Compressing & uploading…</span>
+                  <span className="text-sm text-muted-foreground">
+                    Preparing photo…
+                  </span>
                 </div>
               ) : (
                 <>
                   <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center">
                     <Camera className="w-7 h-7 text-primary" />
                   </div>
+
                   <div className="text-center">
-                    <p className="text-sm font-semibold text-foreground">Upload Photo</p>
-                    <p className="text-xs text-muted-foreground mt-0.5">Photo is compressed to save data</p>
+                    <p className="text-sm font-semibold text-foreground">
+                      Upload Photo
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      Photo is compressed to save data
+                    </p>
                   </div>
                 </>
               )}
