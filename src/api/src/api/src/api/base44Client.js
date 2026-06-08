@@ -1,5 +1,5 @@
 export async function diagnoseCrop(data) {
-  const url = "https://agriassistant-3afj.onrender.com/api/diagnose";
+  const url = "http://localhost:5000/api/diagnose";
 
   alert("Sending diagnosis request to backend...");
 

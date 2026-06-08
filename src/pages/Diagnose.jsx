@@ -77,14 +77,21 @@ export default function Diagnose() {
   };
 
   const handleAnalyze = async () => {
+    alert("Button clicked");
+
+    setAnalyzing(true);
+    setAnalyzeStage("Connecting to AI server...");
+
     try {
-      setAnalyzing(true);
-      setAnalyzeStage("Connecting to AI server...");
+      alert("About to call backend");
 
       const res = await diagnoseCrop({
         category,
         symptoms,
+        imageUrl,
       });
+
+      alert("Backend replied");
 
       setAnalyzing(false);
 

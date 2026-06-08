@@ -14,7 +14,8 @@ app.use(
     allowedHeaders: ["Content-Type"],
   })
 );
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.url}`);
   next();
@@ -37,7 +38,7 @@ function offlineDiagnosis(category, symptoms) {
 }
 
 app.post("/api/diagnose", async (req, res) => {
-  const { category, symptoms } = req.body || {};
+ const { category, symptoms, imageUrl } = req.body || {};
 
   if (!category || !symptoms) {
     return res.json({
@@ -76,10 +77,22 @@ Return ONLY valid JSON:
       return res.json(offlineDiagnosis(category, symptoms));
     }
 
-    const response = await client.responses.create({
-      model: "gpt-4.1-mini",
-      input: prompt,
-    });
+    const input = imageUrl
+  ? [
+      {
+        role: "user",
+        content: [
+          { type: "input_text", text: prompt },
+          { type: "input_image", image_url: imageUrl },
+        ],
+      },
+    ]
+  : prompt;
+
+const response = await client.responses.create({
+  model: "gpt-4.1-mini",
+  input,
+});
 
     const text = response.output_text;
 
