@@ -29,14 +29,24 @@ export default function ImageUploader({ imageUrl, onImageUploaded }) {
         });
       }
 
-      const previewUrl = URL.createObjectURL(compressed);
-      onImageUploaded(previewUrl);
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        onImageUploaded(reader.result);
+        setUploading(false);
+      };
+
+      reader.onerror = () => {
+        setUploading(false);
+        alert("Image could not be loaded.");
+      };
+
+      reader.readAsDataURL(compressed);
     } catch (error) {
       console.error(error);
+      setUploading(false);
       alert("Image could not be loaded.");
     }
-
-    setUploading(false);
   };
 
   return (
