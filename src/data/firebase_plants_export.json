@@ -1,0 +1,37 @@
+{
+    "plants": {
+        "Gnetum_africanum": {
+            "common_name": "Eru vine",
+            "family": "Gnetaceae",
+            "description": "A vine native to West and Central African rainforests. Used as a wild vegetable.",
+            "images": [
+                "https://upload.wikimedia.org/wikipedia/commons/0/0b/Gnetum_africanum.jpg"
+            ],
+            "diseases": []
+        },
+        "Khaya_anthotheca": {
+            "common_name": "East African Mahogany",
+            "family": "Meliaceae",
+            "description": "Large rainforest tree native to tropical Africa, valued for timber.",
+            "images": [
+                "https://upload.wikimedia.org/wikipedia/commons/4/49/Khaya_anthotheca.jpg"
+            ],
+            "diseases": []
+        },
+        "Cassava": {
+            "common_name": "Cassava",
+            "family": "Euphorbiaceae",
+            "description": "Staple root crop in tropical Africa.",
+            "images": [
+                "https://upload.wikimedia.org/wikipedia/commons/0/0f/Cassava-root.jpg"
+            ],
+            "diseases": [
+                {
+                    "name": "Cassava Mosaic Disease",
+                    "description": "Leads to leaf chlorosis and distortion.",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Cassava_mosaic_disease.jpg"
+                }
+            ]
+        }
+    }
+}

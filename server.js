@@ -4,6 +4,8 @@ dotenv.config();
 import express from "express";
 import cors from "cors";
 import OpenAI from "openai";
+import fs from "fs";
+import path from "path";
 
 const app = express();
 
@@ -27,6 +29,23 @@ const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+const plantDatabasePath = path.join(
+  process.cwd(),
+  "src",
+  "data",
+  "firebase_plants_export.json"
+);
+
+let plantDatabase = {};
+
+try {
+  const rawPlantData = fs.readFileSync(plantDatabasePath, "utf-8");
+  plantDatabase = JSON.parse(rawPlantData);
+  console.log("Plant database loaded");
+} catch (error) {
+  console.log("Plant database not loaded:", error.message);
+}
+
 function offlineDiagnosis(category, symptoms) {
   return {
     diagnosis_name: "Offline Diagnosis",
@@ -37,6 +56,40 @@ function offlineDiagnosis(category, symptoms) {
     chemical_treatment: "Use local treatment if needed.",
     prevention_tips: "Monitor regularly and maintain hygiene.",
   };
+}
+
+function findPlantMatches(category, symptoms) {
+  const plants = plantDatabase.plants || {};
+  const searchText = `${category} ${symptoms}`.toLowerCase();
+
+  const matches = Object.entries(plants)
+    .filter(([plantKey, plant]) => {
+      const plantText = [
+        plantKey,
+        plant.common_name,
+        plant.family,
+        plant.description,
+        ...(plant.diseases || []).map((disease) => disease.name),
+        ...(plant.diseases || []).map((disease) => disease.description),
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+
+      return searchText
+        .split(/\s+/)
+        .some((word) => word.length > 3 && plantText.includes(word));
+    })
+    .slice(0, 5)
+    .map(([plantKey, plant]) => ({
+      plant_key: plantKey,
+      common_name: plant.common_name,
+      family: plant.family,
+      description: plant.description,
+      diseases: plant.diseases || [],
+    }));
+
+  return matches;
 }
 
 app.post("/api/diagnose", async (req, res) => {
@@ -54,6 +107,8 @@ app.post("/api/diagnose", async (req, res) => {
     });
   }
 
+  const databaseMatches = findPlantMatches(category, symptoms);
+
   const prompt = `
 You are an expert agricultural assistant.
 
@@ -61,6 +116,11 @@ Category: ${category}
 
 Symptoms:
 ${symptoms}
+
+Relevant plant database matches:
+${JSON.stringify(databaseMatches, null, 2)}
+
+Use the database matches only when they are relevant. If the database does not match the case, say so indirectly by relying on the image and symptoms instead.
 
 If an image is provided, analyse the visible crop or animal condition carefully.
 
