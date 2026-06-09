@@ -120,7 +120,7 @@ ${symptoms}
 Relevant plant database matches:
 ${JSON.stringify(databaseMatches, null, 2)}
 
-Use the database matches only when they are relevant. If the database does not match the case, say so indirectly by relying on the image and symptoms instead.
+Use the database matches only when they are relevant. If the database does not match the case, rely on the image and symptoms instead.
 
 If an image is provided, analyse the visible crop or animal condition carefully.
 
@@ -178,8 +178,17 @@ Return ONLY valid JSON:
 
     return res.json(result);
   } catch (error) {
-    console.log("AI failed, switching to offline mode:", error.message);
-    return res.json(offlineDiagnosis(category, symptoms));
+    console.error("AI ERROR FULL:", error);
+
+    return res.json({
+      diagnosis_name: "AI Error",
+      confidence: "low",
+      severity: "low",
+      explanation: error.message || "AI failed",
+      organic_treatment: "",
+      chemical_treatment: "",
+      prevention_tips: "",
+    });
   }
 });
 
