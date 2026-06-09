@@ -1,5 +1,10 @@
 {
   "common_name": "Maize",
+  "crop_aliases": [
+    "maize",
+    "corn",
+    "mahindi"
+  ],
   "family": "Poaceae",
   "description": "Major cereal crop grown throughout Africa.",
   "diseases": [

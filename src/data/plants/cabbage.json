@@ -1,5 +1,9 @@
 {
   "common_name": "Cabbage",
+  "crop_aliases": [
+    "cabbage",
+    "kabichi"
+  ],
   "family": "Brassicaceae",
   "description": "Important vegetable crop grown across East Africa.",
   "diseases": [

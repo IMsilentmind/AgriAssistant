@@ -1,5 +1,9 @@
 {
   "common_name": "Spinach",
+  "crop_aliases": [
+    "spinach",
+    "spinach leaves"
+  ],
   "family": "Amaranthaceae",
   "description": "Leafy vegetable rich in vitamins and minerals.",
   "diseases": [

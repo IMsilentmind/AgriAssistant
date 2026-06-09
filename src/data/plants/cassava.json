@@ -1,5 +1,10 @@
 {
   "common_name": "Cassava",
+  "crop_aliases": [
+    "cassava",
+    "manioc",
+    "muhogo"
+  ],
   "family": "Euphorbiaceae",
   "description": "Staple root crop widely grown across Africa.",
   "diseases": [

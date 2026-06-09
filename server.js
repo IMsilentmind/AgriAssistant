@@ -76,6 +76,7 @@ function findPlantMatches(category, symptoms) {
       const plantText = [
         plantKey,
         plant.common_name,
+        ...(plant.crop_aliases || []),
         plant.family,
         plant.description,
         ...(plant.diseases || []).map((disease) => disease.name),
@@ -94,6 +95,7 @@ function findPlantMatches(category, symptoms) {
     .map(([plantKey, plant]) => ({
       plant_key: plantKey,
       common_name: plant.common_name,
+      crop_aliases: plant.crop_aliases || [],
       family: plant.family,
       description: plant.description,
       diseases: plant.diseases || [],
@@ -115,6 +117,7 @@ function findBestDiseaseMatch(category, symptoms) {
     const plantWords = [
       plantKey,
       plant.common_name,
+      ...(plant.crop_aliases || []),
       plant.family,
       plant.description,
     ]
@@ -152,6 +155,7 @@ function findBestDiseaseMatch(category, symptoms) {
         const match = {
           plant_key: plantKey,
           plant_common_name: plant.common_name,
+          crop_aliases: plant.crop_aliases || [],
           diagnosis_name: disease.name,
           confidence_score: confidenceScore,
           confidence:

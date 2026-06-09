@@ -1,5 +1,10 @@
 {
   "common_name": "Onion",
+  "crop_aliases": [
+    "onion",
+    "vitunguu",
+    "red onion"
+  ],
   "family": "Amaryllidaceae",
   "description": "Widely cultivated vegetable crop.",
   "diseases": [

@@ -1,5 +1,10 @@
 {
   "common_name": "Banana",
+  "crop_aliases": [
+    "banana",
+    "ndizi",
+    "plantain"
+  ],
   "family": "Musaceae",
   "description": "Major food and cash crop in East Africa.",
   "diseases": [

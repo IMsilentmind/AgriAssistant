@@ -1,5 +1,10 @@
 {
   "common_name": "Sukuma Wiki",
+  "crop_aliases": [
+    "kale",
+    "sukuma wiki",
+    "sukuma"
+  ],
   "family": "Brassicaceae",
   "description": "Popular leafy vegetable widely grown in East Africa.",
   "diseases": [

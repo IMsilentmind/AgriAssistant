@@ -1,5 +1,9 @@
 {
   "common_name": "Mango",
+  "crop_aliases": [
+    "mango",
+    "embe"
+  ],
   "family": "Anacardiaceae",
   "description": "Fruit tree widely grown in Kenya and East Africa.",
   "diseases": [

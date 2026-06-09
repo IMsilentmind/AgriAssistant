@@ -1,5 +1,10 @@
 {
   "common_name": "Potato",
+  "crop_aliases": [
+    "potato",
+    "irish potato",
+    "viazi"
+  ],
   "family": "Solanaceae",
   "description": "Important food crop grown in East African highlands.",
   "diseases": [

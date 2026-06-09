@@ -1,5 +1,10 @@
 {
   "common_name": "Common Bean",
+  "crop_aliases": [
+    "beans",
+    "bean",
+    "maharagwe"
+  ],
   "family": "Fabaceae",
   "description": "Important protein crop widely grown in Africa.",
   "diseases": [

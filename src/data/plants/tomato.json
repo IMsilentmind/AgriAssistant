@@ -1,5 +1,10 @@
 {
   "common_name": "Tomato",
+  "crop_aliases": [
+    "tomato",
+    "tomatoes",
+    "nyanya"
+  ],
   "family": "Solanaceae",
   "description": "Popular vegetable crop grown commercially and domestically.",
   "diseases": [
