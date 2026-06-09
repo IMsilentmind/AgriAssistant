@@ -142,6 +142,146 @@
           "prevention_tips": "Practice crop rotation and use certified seed."
         }
       ]
+    },
+    "Potato": {
+      "common_name": "Potato",
+      "family": "Solanaceae",
+      "description": "Important food crop grown in highland regions of East Africa.",
+      "diseases": [
+        {
+          "name": "Late Blight",
+          "description": "Serious disease causing dark lesions on leaves and tubers.",
+          "symptoms": [
+            "dark leaf patches",
+            "leaf collapse",
+            "tuber rot"
+          ],
+          "severity": "high",
+          "organic_treatment": "Remove infected plants and improve field sanitation.",
+          "chemical_treatment": "Apply approved blight fungicides.",
+          "prevention_tips": "Use certified seed and avoid prolonged leaf wetness."
+        }
+      ]
+    },
+    "Banana": {
+      "common_name": "Banana",
+      "family": "Musaceae",
+      "description": "Major food and cash crop in East Africa.",
+      "diseases": [
+        {
+          "name": "Black Sigatoka",
+          "description": "Fungal disease causing black streaks and reduced yields.",
+          "symptoms": [
+            "black streaks",
+            "yellow leaves",
+            "premature leaf death"
+          ],
+          "severity": "high",
+          "organic_treatment": "Remove infected leaves and improve spacing.",
+          "chemical_treatment": "Apply approved fungicides where necessary.",
+          "prevention_tips": "Maintain field hygiene and good airflow."
+        }
+      ]
+    },
+    "Spinach": {
+      "common_name": "Spinach",
+      "family": "Amaranthaceae",
+      "description": "Leafy vegetable rich in vitamins and minerals.",
+      "diseases": [
+        {
+          "name": "Downy Mildew",
+          "description": "Disease causing yellow patches and grey growth under leaves.",
+          "symptoms": [
+            "yellow patches",
+            "grey growth",
+            "leaf curling"
+          ],
+          "severity": "medium",
+          "organic_treatment": "Remove infected leaves and improve airflow.",
+          "chemical_treatment": "Apply approved fungicides if needed.",
+          "prevention_tips": "Avoid overhead irrigation."
+        }
+      ]
+    },
+    "Kale": {
+      "common_name": "Sukuma Wiki",
+      "family": "Brassicaceae",
+      "description": "Popular leafy vegetable widely grown in East Africa.",
+      "diseases": [
+        {
+          "name": "Black Rot",
+          "description": "Bacterial disease causing yellow V-shaped lesions.",
+          "symptoms": [
+            "yellow leaf edges",
+            "v-shaped lesions",
+            "wilting"
+          ],
+          "severity": "high",
+          "organic_treatment": "Remove infected plants immediately.",
+          "chemical_treatment": "No effective cure; focus on prevention.",
+          "prevention_tips": "Use clean seed and rotate crops."
+        }
+      ]
+    },
+    "Cabbage": {
+      "common_name": "Cabbage",
+      "family": "Brassicaceae",
+      "description": "Important vegetable crop grown across East Africa.",
+      "diseases": [
+        {
+          "name": "Black Rot",
+          "description": "Bacterial disease causing yellowing and leaf death.",
+          "symptoms": [
+            "yellow leaves",
+            "black veins",
+            "leaf collapse"
+          ],
+          "severity": "high",
+          "organic_treatment": "Remove infected plants.",
+          "chemical_treatment": "Preventive bactericides where approved.",
+          "prevention_tips": "Use certified seed and avoid water splash."
+        }
+      ]
+    },
+    "Onion": {
+      "common_name": "Onion",
+      "family": "Amaryllidaceae",
+      "description": "Widely cultivated vegetable crop.",
+      "diseases": [
+        {
+          "name": "Purple Blotch",
+          "description": "Fungal disease causing purple lesions on leaves.",
+          "symptoms": [
+            "purple spots",
+            "leaf dieback",
+            "reduced bulb size"
+          ],
+          "severity": "medium",
+          "organic_treatment": "Remove infected leaves.",
+          "chemical_treatment": "Apply approved fungicides.",
+          "prevention_tips": "Avoid overcrowding and improve airflow."
+        }
+      ]
+    },
+    "Mango": {
+      "common_name": "Mango",
+      "family": "Anacardiaceae",
+      "description": "Fruit tree widely grown in Kenya and East Africa.",
+      "diseases": [
+        {
+          "name": "Anthracnose",
+          "description": "Fungal disease affecting leaves, flowers and fruits.",
+          "symptoms": [
+            "black fruit spots",
+            "flower blight",
+            "leaf lesions"
+          ],
+          "severity": "high",
+          "organic_treatment": "Prune affected branches and destroy infected material.",
+          "chemical_treatment": "Apply approved fungicides during flowering.",
+          "prevention_tips": "Improve airflow and avoid overhead irrigation."
+        }
+      ]
     }
   }
 }
