@@ -29,21 +29,30 @@ const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-const plantDatabasePath = path.join(
-  process.cwd(),
-  "src",
-  "data",
-  "firebase_plants_export.json"
-);
+const plantsFolderPath = path.join(process.cwd(), "src", "data", "plants");
 
-let plantDatabase = {};
+let plantDatabase = {
+  plants: {},
+};
 
 try {
-  const rawPlantData = fs.readFileSync(plantDatabasePath, "utf-8");
-  plantDatabase = JSON.parse(rawPlantData);
-  console.log("Plant database loaded");
+  const plantFiles = fs
+    .readdirSync(plantsFolderPath)
+    .filter((file) => file.endsWith(".json"));
+
+  for (const file of plantFiles) {
+    const filePath = path.join(plantsFolderPath, file);
+    const rawPlantData = fs.readFileSync(filePath, "utf-8");
+    const plantData = JSON.parse(rawPlantData);
+
+    const plantKey = path.basename(file, ".json");
+
+    plantDatabase.plants[plantKey] = plantData;
+  }
+
+  console.log(`Plant database loaded from ${plantFiles.length} files`);
 } catch (error) {
-  console.log("Plant database not loaded:", error.message);
+  console.log("Plant database folder not loaded:", error.message);
 }
 
 function offlineDiagnosis(category, symptoms) {

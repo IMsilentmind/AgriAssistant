@@ -1,0 +1,33 @@
+{
+  "common_name": "Spinach",
+  "family": "Amaranthaceae",
+  "description": "Leafy vegetable rich in vitamins and minerals.",
+  "diseases": [
+    {
+      "name": "Downy Mildew",
+      "description": "Disease causing yellow patches and grey growth under leaves.",
+      "symptoms": [
+        "yellow patches",
+        "grey growth",
+        "leaf curling"
+      ],
+      "severity": "medium",
+      "organic_treatment": "Remove infected leaves and improve airflow.",
+      "chemical_treatment": "Apply approved fungicides if needed.",
+      "prevention_tips": "Avoid overhead irrigation."
+    },
+    {
+      "name": "Leaf Spot",
+      "description": "Disease causing brown or black spots on leaves.",
+      "symptoms": [
+        "brown spots",
+        "black lesions",
+        "leaf yellowing"
+      ],
+      "severity": "medium",
+      "organic_treatment": "Remove affected leaves.",
+      "chemical_treatment": "Use approved fungicides if necessary.",
+      "prevention_tips": "Practice crop rotation."
+    }
+  ]
+}

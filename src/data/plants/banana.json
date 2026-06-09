@@ -1,0 +1,33 @@
+{
+  "common_name": "Banana",
+  "family": "Musaceae",
+  "description": "Major food and cash crop in East Africa.",
+  "diseases": [
+    {
+      "name": "Black Sigatoka",
+      "description": "Fungal disease causing black streaks and reduced yields.",
+      "symptoms": [
+        "black streaks",
+        "yellow leaves",
+        "premature leaf death"
+      ],
+      "severity": "high",
+      "organic_treatment": "Remove infected leaves and improve spacing.",
+      "chemical_treatment": "Apply approved fungicides where necessary.",
+      "prevention_tips": "Maintain field hygiene and good airflow."
+    },
+    {
+      "name": "Banana Bacterial Wilt",
+      "description": "Serious bacterial disease affecting banana plants.",
+      "symptoms": [
+        "yellow leaves",
+        "wilting",
+        "fruit rot"
+      ],
+      "severity": "high",
+      "organic_treatment": "Remove infected plants immediately.",
+      "chemical_treatment": "No effective chemical cure.",
+      "prevention_tips": "Disinfect tools and remove infected plants."
+    }
+  ]
+}

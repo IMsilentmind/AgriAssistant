@@ -1,0 +1,20 @@
+{
+  "common_name": "Sukuma Wiki",
+  "family": "Brassicaceae",
+  "description": "Popular leafy vegetable widely grown in East Africa.",
+  "diseases": [
+    {
+      "name": "Black Rot",
+      "description": "Bacterial disease causing yellow V-shaped lesions.",
+      "symptoms": [
+        "yellow leaf edges",
+        "v-shaped lesions",
+        "wilting"
+      ],
+      "severity": "high",
+      "organic_treatment": "Remove infected plants immediately.",
+      "chemical_treatment": "No effective cure.",
+      "prevention_tips": "Use clean seed and rotate crops."
+    }
+  ]
+}

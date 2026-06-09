@@ -1,0 +1,20 @@
+{
+  "common_name": "Cabbage",
+  "family": "Brassicaceae",
+  "description": "Important vegetable crop grown across East Africa.",
+  "diseases": [
+    {
+      "name": "Black Rot",
+      "description": "Bacterial disease causing yellowing and leaf death.",
+      "symptoms": [
+        "yellow leaves",
+        "black veins",
+        "leaf collapse"
+      ],
+      "severity": "high",
+      "organic_treatment": "Remove infected plants.",
+      "chemical_treatment": "Preventive bactericides where approved.",
+      "prevention_tips": "Use certified seed."
+    }
+  ]
+}

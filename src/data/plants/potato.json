@@ -1,0 +1,20 @@
+{
+  "common_name": "Potato",
+  "family": "Solanaceae",
+  "description": "Important food crop grown in East African highlands.",
+  "diseases": [
+    {
+      "name": "Late Blight",
+      "description": "Serious disease causing dark lesions on leaves and tubers.",
+      "symptoms": [
+        "dark leaf patches",
+        "leaf collapse",
+        "tuber rot"
+      ],
+      "severity": "high",
+      "organic_treatment": "Remove infected plants.",
+      "chemical_treatment": "Apply approved blight fungicides.",
+      "prevention_tips": "Use certified seed."
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "common_name": "Tomato",
+  "family": "Solanaceae",
+  "description": "Popular vegetable crop grown commercially and domestically.",
+  "diseases": [
+    {
+      "name": "Early Blight",
+      "description": "Fungal disease causing dark concentric spots on leaves.",
+      "symptoms": [
+        "brown leaf spots",
+        "yellowing leaves",
+        "leaf drop"
+      ],
+      "severity": "medium",
+      "organic_treatment": "Remove infected leaves and improve air circulation.",
+      "chemical_treatment": "Use approved fungicides where necessary.",
+      "prevention_tips": "Rotate crops and avoid overhead irrigation."
+    },
+    {
+      "name": "Late Blight",
+      "description": "Aggressive disease affecting leaves, stems and fruits.",
+      "symptoms": [
+        "water-soaked lesions",
+        "dark leaf patches",
+        "fruit rot"
+      ],
+      "severity": "high",
+      "organic_treatment": "Remove infected plants immediately.",
+      "chemical_treatment": "Apply approved blight fungicides promptly.",
+      "prevention_tips": "Monitor humid weather and avoid excessive moisture."
+    },
+    {
+      "name": "Bacterial Wilt",
+      "description": "Bacterial disease causing sudden wilting of plants.",
+      "symptoms": [
+        "wilting",
+        "stem discoloration",
+        "plant collapse"
+      ],
+      "severity": "high",
+      "organic_treatment": "Remove infected plants immediately.",
+      "chemical_treatment": "No reliable chemical cure.",
+      "prevention_tips": "Use crop rotation and disease-free seedlings."
+    }
+  ]
+}

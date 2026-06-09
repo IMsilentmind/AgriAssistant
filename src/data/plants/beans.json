@@ -1,0 +1,33 @@
+{
+  "common_name": "Common Bean",
+  "family": "Fabaceae",
+  "description": "Important protein crop widely grown in Africa.",
+  "diseases": [
+    {
+      "name": "Bean Rust",
+      "description": "Fungal disease producing rust-coloured pustules on leaves.",
+      "symptoms": [
+        "rust spots",
+        "yellow leaves",
+        "premature leaf drop"
+      ],
+      "severity": "medium",
+      "organic_treatment": "Remove infected leaves and improve airflow.",
+      "chemical_treatment": "Apply approved fungicides if disease pressure is severe.",
+      "prevention_tips": "Use resistant varieties and avoid overcrowding."
+    },
+    {
+      "name": "Angular Leaf Spot",
+      "description": "Fungal disease causing angular brown lesions on leaves.",
+      "symptoms": [
+        "angular leaf spots",
+        "brown lesions",
+        "leaf yellowing"
+      ],
+      "severity": "medium",
+      "organic_treatment": "Remove infected plant debris.",
+      "chemical_treatment": "Apply appropriate fungicides if infection spreads.",
+      "prevention_tips": "Practice crop rotation and use certified seed."
+    }
+  ]
+}

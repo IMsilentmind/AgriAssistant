@@ -1,0 +1,20 @@
+{
+  "common_name": "Mango",
+  "family": "Anacardiaceae",
+  "description": "Fruit tree widely grown in Kenya and East Africa.",
+  "diseases": [
+    {
+      "name": "Anthracnose",
+      "description": "Fungal disease affecting leaves, flowers and fruits.",
+      "symptoms": [
+        "black fruit spots",
+        "flower blight",
+        "leaf lesions"
+      ],
+      "severity": "high",
+      "organic_treatment": "Prune affected branches.",
+      "chemical_treatment": "Apply approved fungicides during flowering.",
+      "prevention_tips": "Improve airflow."
+    }
+  ]
+}

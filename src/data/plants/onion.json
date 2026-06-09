@@ -1,0 +1,20 @@
+{
+  "common_name": "Onion",
+  "family": "Amaryllidaceae",
+  "description": "Widely cultivated vegetable crop.",
+  "diseases": [
+    {
+      "name": "Purple Blotch",
+      "description": "Fungal disease causing purple lesions on leaves.",
+      "symptoms": [
+        "purple spots",
+        "leaf dieback",
+        "reduced bulb size"
+      ],
+      "severity": "medium",
+      "organic_treatment": "Remove infected leaves.",
+      "chemical_treatment": "Apply approved fungicides.",
+      "prevention_tips": "Improve airflow."
+    }
+  ]
+}
