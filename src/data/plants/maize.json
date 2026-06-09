@@ -1,0 +1,34 @@
+{
+  "common_name": "Maize",
+  "family": "Poaceae",
+  "description": "Major cereal crop grown throughout Africa.",
+  "diseases": [
+    {
+      "name": "Fall Armyworm Infestation",
+      "description": "Larvae feed on leaves and whorls causing severe damage.",
+      "symptoms": [
+        "holes in leaves",
+        "ragged leaf edges",
+        "frass in whorl",
+        "damaged growing point"
+      ],
+      "severity": "high",
+      "organic_treatment": "Handpick larvae where practical and encourage natural predators.",
+      "chemical_treatment": "Apply approved fall armyworm insecticides according to local recommendations.",
+      "prevention_tips": "Scout fields early and use integrated pest management."
+    },
+    {
+      "name": "Maize Streak Disease",
+      "description": "Viral disease causing yellow streaks along leaves.",
+      "symptoms": [
+        "yellow streaks",
+        "stunted growth",
+        "poor cob formation"
+      ],
+      "severity": "medium",
+      "organic_treatment": "Remove infected plants and control leafhopper vectors.",
+      "chemical_treatment": "Use vector control where economically justified.",
+      "prevention_tips": "Use resistant varieties and maintain field hygiene."
+    }
+  ]
+}

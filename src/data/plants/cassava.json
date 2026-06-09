@@ -1,0 +1,35 @@
+{
+  "common_name": "Cassava",
+  "family": "Euphorbiaceae",
+  "description": "Staple root crop widely grown across Africa.",
+  "diseases": [
+    {
+      "name": "Cassava Mosaic Disease",
+      "description": "Viral disease causing yellow mosaic patterns, leaf distortion and reduced yield.",
+      "symptoms": [
+        "yellow mosaic leaves",
+        "leaf distortion",
+        "stunted growth",
+        "reduced root yield"
+      ],
+      "severity": "high",
+      "organic_treatment": "Remove heavily infected plants and use disease-free planting material.",
+      "chemical_treatment": "No direct chemical cure. Control whiteflies using approved insecticides where necessary.",
+      "prevention_tips": "Plant resistant varieties and regularly inspect fields."
+    },
+    {
+      "name": "Cassava Brown Streak Disease",
+      "description": "Viral disease causing root necrosis and yellowing leaves.",
+      "symptoms": [
+        "yellow leaves",
+        "brown root streaks",
+        "root rot",
+        "stunted growth"
+      ],
+      "severity": "high",
+      "organic_treatment": "Remove infected plants and use clean planting material.",
+      "chemical_treatment": "No chemical cure available.",
+      "prevention_tips": "Use resistant varieties and certified cuttings."
+    }
+  ]
+}
