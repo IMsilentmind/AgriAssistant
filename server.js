@@ -71,6 +71,7 @@ function findPlantMatches(category, symptoms) {
         plant.description,
         ...(plant.diseases || []).map((disease) => disease.name),
         ...(plant.diseases || []).map((disease) => disease.description),
+        ...(plant.diseases || []).flatMap((disease) => disease.symptoms || []),
       ]
         .filter(Boolean)
         .join(" ")
@@ -92,6 +93,106 @@ function findPlantMatches(category, symptoms) {
   return matches;
 }
 
+function findBestDiseaseMatch(category, symptoms) {
+  const plants = plantDatabase.plants || {};
+  const searchWords = `${category} ${symptoms}`
+    .toLowerCase()
+    .split(/\s+/)
+    .filter((word) => word.length > 3);
+
+  let bestMatch = null;
+
+  for (const [plantKey, plant] of Object.entries(plants)) {
+    const plantWords = [
+      plantKey,
+      plant.common_name,
+      plant.family,
+      plant.description,
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+
+    const plantNameMatched = searchWords.some((word) =>
+      plantWords.includes(word)
+    );
+
+    for (const disease of plant.diseases || []) {
+      const diseaseText = [
+        disease.name,
+        disease.description,
+        ...(disease.symptoms || []),
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+
+      const matchedWords = searchWords.filter((word) =>
+        diseaseText.includes(word)
+      );
+
+      let score = matchedWords.length;
+
+      if (plantNameMatched) {
+        score += 2;
+      }
+
+      if (score > 0) {
+        const confidenceScore = Math.min(95, Math.round((score / 6) * 100));
+
+        const match = {
+          plant_key: plantKey,
+          plant_common_name: plant.common_name,
+          diagnosis_name: disease.name,
+          confidence_score: confidenceScore,
+          confidence:
+            confidenceScore >= 70
+              ? "high"
+              : confidenceScore >= 40
+              ? "medium"
+              : "low",
+          severity: disease.severity || "moderate",
+          explanation: `Based on your crop and symptoms, this matches ${disease.name} in the plant database. ${disease.description}`,
+          organic_treatment:
+            disease.organic_treatment ||
+            "Remove badly affected parts and improve crop hygiene.",
+          chemical_treatment:
+            disease.chemical_treatment ||
+            "Consult a local agricultural supplier for approved treatment.",
+          prevention_tips:
+            disease.prevention_tips ||
+            "Monitor regularly and use healthy planting material.",
+          matched_symptoms: matchedWords,
+        };
+
+        if (!bestMatch || match.confidence_score > bestMatch.confidence_score) {
+          bestMatch = match;
+        }
+      }
+    }
+  }
+
+  return bestMatch;
+}
+
+function databaseDiagnosis(category, symptoms) {
+  const bestMatch = findBestDiseaseMatch(category, symptoms);
+
+  if (!bestMatch) {
+    return offlineDiagnosis(category, symptoms);
+  }
+
+  return {
+    diagnosis_name: bestMatch.diagnosis_name,
+    confidence: bestMatch.confidence,
+    severity: bestMatch.severity,
+    explanation: bestMatch.explanation,
+    organic_treatment: bestMatch.organic_treatment,
+    chemical_treatment: bestMatch.chemical_treatment,
+    prevention_tips: bestMatch.prevention_tips,
+  };
+}
+
 app.post("/api/diagnose", async (req, res) => {
   const { category, symptoms, imageUrl } = req.body || {};
 
@@ -108,6 +209,7 @@ app.post("/api/diagnose", async (req, res) => {
   }
 
   const databaseMatches = findPlantMatches(category, symptoms);
+  const bestDatabaseMatch = findBestDiseaseMatch(category, symptoms);
 
   const prompt = `
 You are an expert agricultural assistant.
@@ -116,6 +218,9 @@ Category: ${category}
 
 Symptoms:
 ${symptoms}
+
+Best database disease match:
+${JSON.stringify(bestDatabaseMatch, null, 2)}
 
 Relevant plant database matches:
 ${JSON.stringify(databaseMatches, null, 2)}
@@ -138,7 +243,7 @@ Return ONLY valid JSON:
 
   try {
     if (!process.env.OPENAI_API_KEY) {
-      return res.json(offlineDiagnosis(category, symptoms));
+      return res.json(databaseDiagnosis(category, symptoms));
     }
 
     const input = imageUrl
@@ -178,17 +283,9 @@ Return ONLY valid JSON:
 
     return res.json(result);
   } catch (error) {
-    console.error("AI ERROR FULL:", error);
+    console.error("AI ERROR FULL:", error.message);
 
-    return res.json({
-      diagnosis_name: "AI Error",
-      confidence: "low",
-      severity: "low",
-      explanation: error.message || "AI failed",
-      organic_treatment: "",
-      chemical_treatment: "",
-      prevention_tips: "",
-    });
+    return res.json(databaseDiagnosis(category, symptoms));
   }
 });
 
