@@ -1,37 +1,147 @@
 {
-    "plants": {
-        "Gnetum_africanum": {
-            "common_name": "Eru vine",
-            "family": "Gnetaceae",
-            "description": "A vine native to West and Central African rainforests. Used as a wild vegetable.",
-            "images": [
-                "https://upload.wikimedia.org/wikipedia/commons/0/0b/Gnetum_africanum.jpg"
-            ],
-            "diseases": []
-        },
-        "Khaya_anthotheca": {
-            "common_name": "East African Mahogany",
-            "family": "Meliaceae",
-            "description": "Large rainforest tree native to tropical Africa, valued for timber.",
-            "images": [
-                "https://upload.wikimedia.org/wikipedia/commons/4/49/Khaya_anthotheca.jpg"
-            ],
-            "diseases": []
-        },
-        "Cassava": {
-            "common_name": "Cassava",
-            "family": "Euphorbiaceae",
-            "description": "Staple root crop in tropical Africa.",
-            "images": [
-                "https://upload.wikimedia.org/wikipedia/commons/0/0f/Cassava-root.jpg"
-            ],
-            "diseases": [
-                {
-                    "name": "Cassava Mosaic Disease",
-                    "description": "Leads to leaf chlorosis and distortion.",
-                    "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Cassava_mosaic_disease.jpg"
-                }
-            ]
+  "plants": {
+    "Gnetum_africanum": {
+      "common_name": "Eru vine",
+      "family": "Gnetaceae",
+      "description": "A vine native to West and Central African rainforests. Used as a wild vegetable.",
+      "images": [
+        "https://upload.wikimedia.org/wikipedia/commons/0/0b/Gnetum_africanum.jpg"
+      ],
+      "diseases": []
+    },
+    "Khaya_anthotheca": {
+      "common_name": "East African Mahogany",
+      "family": "Meliaceae",
+      "description": "Large rainforest tree native to tropical Africa, valued for timber.",
+      "images": [
+        "https://upload.wikimedia.org/wikipedia/commons/4/49/Khaya_anthotheca.jpg"
+      ],
+      "diseases": []
+    },
+    "Cassava": {
+      "common_name": "Cassava",
+      "family": "Euphorbiaceae",
+      "description": "Staple root crop widely grown across Africa.",
+      "images": [
+        "https://upload.wikimedia.org/wikipedia/commons/0/0f/Cassava-root.jpg"
+      ],
+      "diseases": [
+        {
+          "name": "Cassava Mosaic Disease",
+          "description": "Viral disease causing yellow mosaic patterns, leaf distortion and reduced yield.",
+          "symptoms": [
+            "yellow mosaic leaves",
+            "leaf distortion",
+            "stunted growth",
+            "reduced root yield"
+          ],
+          "severity": "high",
+          "organic_treatment": "Remove heavily infected plants and use disease-free planting material.",
+          "chemical_treatment": "No direct chemical cure. Control whiteflies using approved insecticides where necessary.",
+          "prevention_tips": "Plant resistant varieties and regularly inspect fields.",
+          "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Cassava_mosaic_disease.jpg"
         }
+      ]
+    },
+    "Maize": {
+      "common_name": "Maize",
+      "family": "Poaceae",
+      "description": "Major cereal crop grown throughout Africa.",
+      "diseases": [
+        {
+          "name": "Fall Armyworm Infestation",
+          "description": "Larvae feed on leaves and whorls causing severe damage.",
+          "symptoms": [
+            "holes in leaves",
+            "ragged leaf edges",
+            "frass in whorl",
+            "damaged growing point"
+          ],
+          "severity": "high",
+          "organic_treatment": "Handpick larvae where practical and encourage natural predators.",
+          "chemical_treatment": "Apply approved fall armyworm insecticides according to local recommendations.",
+          "prevention_tips": "Scout fields early and use integrated pest management."
+        },
+        {
+          "name": "Maize Streak Disease",
+          "description": "Viral disease causing yellow streaks along leaves.",
+          "symptoms": [
+            "yellow streaks",
+            "stunted growth",
+            "poor cob formation"
+          ],
+          "severity": "medium",
+          "organic_treatment": "Remove infected plants and control leafhopper vectors.",
+          "chemical_treatment": "Use vector control where economically justified.",
+          "prevention_tips": "Use resistant varieties and maintain field hygiene."
+        }
+      ]
+    },
+    "Tomato": {
+      "common_name": "Tomato",
+      "family": "Solanaceae",
+      "description": "Popular vegetable crop grown commercially and domestically.",
+      "diseases": [
+        {
+          "name": "Early Blight",
+          "description": "Fungal disease causing dark concentric spots on leaves.",
+          "symptoms": [
+            "brown leaf spots",
+            "yellowing leaves",
+            "leaf drop"
+          ],
+          "severity": "medium",
+          "organic_treatment": "Remove infected leaves and improve air circulation.",
+          "chemical_treatment": "Use approved fungicides where necessary.",
+          "prevention_tips": "Rotate crops and avoid overhead irrigation."
+        },
+        {
+          "name": "Late Blight",
+          "description": "Aggressive disease affecting leaves, stems and fruits.",
+          "symptoms": [
+            "water-soaked lesions",
+            "dark leaf patches",
+            "fruit rot"
+          ],
+          "severity": "high",
+          "organic_treatment": "Remove infected plants immediately.",
+          "chemical_treatment": "Apply approved blight fungicides promptly.",
+          "prevention_tips": "Monitor humid weather and avoid excessive moisture."
+        }
+      ]
+    },
+    "Beans": {
+      "common_name": "Common Bean",
+      "family": "Fabaceae",
+      "description": "Important protein crop widely grown in Africa.",
+      "diseases": [
+        {
+          "name": "Bean Rust",
+          "description": "Fungal disease producing rust-coloured pustules on leaves.",
+          "symptoms": [
+            "rust spots",
+            "yellow leaves",
+            "premature leaf drop"
+          ],
+          "severity": "medium",
+          "organic_treatment": "Remove infected leaves and improve airflow.",
+          "chemical_treatment": "Apply approved fungicides if disease pressure is severe.",
+          "prevention_tips": "Use resistant varieties and avoid overcrowding."
+        },
+        {
+          "name": "Angular Leaf Spot",
+          "description": "Fungal disease causing angular brown lesions on leaves.",
+          "symptoms": [
+            "angular leaf spots",
+            "brown lesions",
+            "leaf yellowing"
+          ],
+          "severity": "medium",
+          "organic_treatment": "Remove infected plant debris.",
+          "chemical_treatment": "Apply appropriate fungicides if infection spreads.",
+          "prevention_tips": "Practice crop rotation and use certified seed."
+        }
+      ]
     }
+  }
 }
