@@ -1,0 +1,38 @@
+{
+  "common_name": "Rice",
+  "crop_aliases": [
+    "rice",
+    "mpunga"
+  ],
+  "family": "Poaceae",
+  "description": "Important cereal crop grown in irrigated and rainfed systems.",
+  "diseases": [
+    {
+      "name": "Rice Blast",
+      "description": "Major fungal disease affecting leaves, stems and panicles.",
+      "symptoms": [
+        "diamond-shaped lesions",
+        "brown leaf spots",
+        "neck rot",
+        "poor grain filling"
+      ],
+      "severity": "high",
+      "organic_treatment": "Remove infected crop debris.",
+      "chemical_treatment": "Apply approved fungicides when necessary.",
+      "prevention_tips": "Use resistant varieties and balanced fertilization."
+    },
+    {
+      "name": "Bacterial Leaf Blight",
+      "description": "Bacterial disease causing leaf drying and yield loss.",
+      "symptoms": [
+        "yellow leaf edges",
+        "leaf drying",
+        "wilting"
+      ],
+      "severity": "high",
+      "organic_treatment": "Remove infected plants where possible.",
+      "chemical_treatment": "No reliable cure available.",
+      "prevention_tips": "Use certified seed and resistant varieties."
+    }
+  ]
+}

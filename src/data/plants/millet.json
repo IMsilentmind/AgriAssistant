@@ -1,0 +1,37 @@
+{
+  "common_name": "Millet",
+  "crop_aliases": [
+    "millet",
+    "ulezi"
+  ],
+  "family": "Poaceae",
+  "description": "Highly drought-resistant cereal crop grown in dry regions.",
+  "diseases": [
+    {
+      "name": "Downy Mildew",
+      "description": "Disease causing stunted growth and malformed heads.",
+      "symptoms": [
+        "leaf yellowing",
+        "stunted growth",
+        "white growth"
+      ],
+      "severity": "high",
+      "organic_treatment": "Remove infected plants.",
+      "chemical_treatment": "Use seed treatment products.",
+      "prevention_tips": "Use resistant varieties."
+    },
+    {
+      "name": "Ergot",
+      "description": "Fungal disease affecting flowering heads.",
+      "symptoms": [
+        "sticky droplets",
+        "dark fungal bodies",
+        "poor grain formation"
+      ],
+      "severity": "medium",
+      "organic_treatment": "Remove affected heads.",
+      "chemical_treatment": "Apply fungicides when appropriate.",
+      "prevention_tips": "Plant resistant varieties."
+    }
+  ]
+}

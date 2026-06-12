@@ -1,0 +1,39 @@
+{
+  "common_name": "Avocado",
+  "crop_aliases": [
+    "avocado",
+    "pear",
+    "parachichi"
+  ],
+  "family": "Lauraceae",
+  "description": "High-value fruit crop increasingly exported from East Africa.",
+  "diseases": [
+    {
+      "name": "Root Rot",
+      "description": "Disease affecting roots causing decline and death.",
+      "symptoms": [
+        "yellow leaves",
+        "wilting",
+        "poor growth",
+        "root decay"
+      ],
+      "severity": "high",
+      "organic_treatment": "Improve drainage and remove infected roots.",
+      "chemical_treatment": "Apply approved root disease treatments where permitted.",
+      "prevention_tips": "Avoid waterlogging and use healthy seedlings."
+    },
+    {
+      "name": "Anthracnose",
+      "description": "Fungal disease affecting fruits and leaves.",
+      "symptoms": [
+        "black fruit spots",
+        "fruit rot",
+        "leaf lesions"
+      ],
+      "severity": "high",
+      "organic_treatment": "Remove infected fruits.",
+      "chemical_treatment": "Apply approved fungicides.",
+      "prevention_tips": "Prune trees and improve airflow."
+    }
+  ]
+}

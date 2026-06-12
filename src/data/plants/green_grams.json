@@ -1,0 +1,38 @@
+{
+  "common_name": "Green Grams",
+  "crop_aliases": [
+    "green grams",
+    "mung bean",
+    "ndengu"
+  ],
+  "family": "Fabaceae",
+  "description": "Popular pulse crop grown in semi-arid East African regions.",
+  "diseases": [
+    {
+      "name": "Yellow Mosaic Virus",
+      "description": "Viral disease causing yellow patches and reduced yield.",
+      "symptoms": [
+        "yellow mosaic",
+        "leaf yellowing",
+        "stunted growth"
+      ],
+      "severity": "high",
+      "organic_treatment": "Remove infected plants.",
+      "chemical_treatment": "Control whiteflies using approved insecticides.",
+      "prevention_tips": "Use resistant seed varieties."
+    },
+    {
+      "name": "Powdery Mildew",
+      "description": "Fungal disease producing white powder on leaves.",
+      "symptoms": [
+        "white powder",
+        "leaf curling",
+        "leaf drying"
+      ],
+      "severity": "medium",
+      "organic_treatment": "Remove infected leaves.",
+      "chemical_treatment": "Apply approved fungicides.",
+      "prevention_tips": "Avoid overcrowding."
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "common_name": "Sweet Potato",
+  "crop_aliases": [
+    "sweet potato",
+    "ngwaci",
+    "sweetpotato"
+  ],
+  "family": "Convolvulaceae",
+  "description": "Nutritious root crop widely grown in East Africa.",
+  "diseases": [
+    {
+      "name": "Sweet Potato Virus Disease",
+      "description": "Viral disease causing severe yield losses.",
+      "symptoms": [
+        "leaf distortion",
+        "yellowing",
+        "stunted growth"
+      ],
+      "severity": "high",
+      "organic_treatment": "Remove infected plants and use clean vines.",
+      "chemical_treatment": "No direct chemical cure.",
+      "prevention_tips": "Use certified planting material."
+    },
+    {
+      "name": "Alternaria Leaf Spot",
+      "description": "Fungal disease causing circular leaf lesions.",
+      "symptoms": [
+        "brown spots",
+        "leaf lesions",
+        "leaf yellowing"
+      ],
+      "severity": "medium",
+      "organic_treatment": "Remove infected leaves.",
+      "chemical_treatment": "Apply approved fungicides.",
+      "prevention_tips": "Improve airflow and avoid overcrowding."
+    }
+  ]
+}

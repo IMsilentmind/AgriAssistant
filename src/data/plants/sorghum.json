@@ -1,0 +1,37 @@
+{
+  "common_name": "Sorghum",
+  "crop_aliases": [
+    "sorghum",
+    "mtama"
+  ],
+  "family": "Poaceae",
+  "description": "Drought-tolerant cereal crop important in arid and semi-arid regions.",
+  "diseases": [
+    {
+      "name": "Anthracnose",
+      "description": "Fungal disease affecting leaves, stems and grains.",
+      "symptoms": [
+        "red leaf spots",
+        "stem lesions",
+        "leaf blight"
+      ],
+      "severity": "medium",
+      "organic_treatment": "Remove infected plant debris.",
+      "chemical_treatment": "Apply approved fungicides if needed.",
+      "prevention_tips": "Use resistant varieties and crop rotation."
+    },
+    {
+      "name": "Sorghum Smut",
+      "description": "Disease replacing grain with black fungal spores.",
+      "symptoms": [
+        "black powder",
+        "damaged grain heads",
+        "poor yield"
+      ],
+      "severity": "high",
+      "organic_treatment": "Remove infected heads.",
+      "chemical_treatment": "Use treated seed before planting.",
+      "prevention_tips": "Plant certified seed."
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "common_name": "Coffee",
+  "crop_aliases": [
+    "coffee",
+    "arabica",
+    "robusta",
+    "kahawa"
+  ],
+  "family": "Rubiaceae",
+  "description": "Important cash crop grown widely in East Africa.",
+  "diseases": [
+    {
+      "name": "Coffee Leaf Rust",
+      "description": "Fungal disease causing orange powdery spots on leaves.",
+      "symptoms": [
+        "orange spots",
+        "yellow leaves",
+        "leaf drop",
+        "reduced yield"
+      ],
+      "severity": "high",
+      "organic_treatment": "Remove infected leaves and improve air circulation.",
+      "chemical_treatment": "Apply approved coffee fungicides.",
+      "prevention_tips": "Use resistant varieties and prune regularly."
+    },
+    {
+      "name": "Coffee Berry Disease",
+      "description": "Fungal disease affecting developing berries.",
+      "symptoms": [
+        "black berries",
+        "berry rot",
+        "fruit drop"
+      ],
+      "severity": "high",
+      "organic_treatment": "Remove infected berries.",
+      "chemical_treatment": "Apply approved fungicides during flowering and fruit development.",
+      "prevention_tips": "Maintain field sanitation and proper pruning."
+    },
+    {
+      "name": "Coffee Wilt Disease",
+      "description": "Serious disease causing sudden wilting and plant death.",
+      "symptoms": [
+        "wilting",
+        "leaf yellowing",
+        "branch dieback"
+      ],
+      "severity": "high",
+      "organic_treatment": "Remove infected plants immediately.",
+      "chemical_treatment": "No effective cure available.",
+      "prevention_tips": "Use disease-free planting material."
+    }
+  ]
+}

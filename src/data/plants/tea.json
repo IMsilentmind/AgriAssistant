@@ -1,0 +1,37 @@
+{
+  "common_name": "Tea",
+  "crop_aliases": [
+    "tea",
+    "chai"
+  ],
+  "family": "Theaceae",
+  "description": "Major export crop in Kenya and East Africa.",
+  "diseases": [
+    {
+      "name": "Tea Blister Blight",
+      "description": "Fungal disease causing blister-like spots on leaves.",
+      "symptoms": [
+        "leaf blisters",
+        "white patches",
+        "distorted leaves"
+      ],
+      "severity": "high",
+      "organic_treatment": "Remove heavily infected shoots.",
+      "chemical_treatment": "Apply approved fungicides.",
+      "prevention_tips": "Monitor fields regularly during wet seasons."
+    },
+    {
+      "name": "Grey Blight",
+      "description": "Disease causing grey-brown lesions on leaves.",
+      "symptoms": [
+        "grey spots",
+        "leaf lesions",
+        "leaf drop"
+      ],
+      "severity": "medium",
+      "organic_treatment": "Prune affected branches.",
+      "chemical_treatment": "Use approved fungicides where necessary.",
+      "prevention_tips": "Improve airflow within tea bushes."
+    }
+  ]
+}

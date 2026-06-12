@@ -1,0 +1,38 @@
+{
+  "common_name": "Groundnuts",
+  "crop_aliases": [
+    "groundnuts",
+    "peanuts",
+    "karanga"
+  ],
+  "family": "Fabaceae",
+  "description": "Important food and cash crop in East Africa.",
+  "diseases": [
+    {
+      "name": "Groundnut Rosette Disease",
+      "description": "Viral disease spread by aphids.",
+      "symptoms": [
+        "stunted growth",
+        "yellow leaves",
+        "rosette appearance"
+      ],
+      "severity": "high",
+      "organic_treatment": "Remove infected plants.",
+      "chemical_treatment": "Control aphids using approved insecticides.",
+      "prevention_tips": "Use resistant varieties and early planting."
+    },
+    {
+      "name": "Leaf Spot",
+      "description": "Fungal disease causing dark lesions on leaves.",
+      "symptoms": [
+        "brown spots",
+        "black lesions",
+        "leaf drop"
+      ],
+      "severity": "medium",
+      "organic_treatment": "Remove infected debris.",
+      "chemical_treatment": "Apply approved fungicides.",
+      "prevention_tips": "Practice crop rotation."
+    }
+  ]
+}

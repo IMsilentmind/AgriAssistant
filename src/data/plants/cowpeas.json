@@ -1,0 +1,37 @@
+{
+  "common_name": "Cowpeas",
+  "crop_aliases": [
+    "cowpeas",
+    "kunde"
+  ],
+  "family": "Fabaceae",
+  "description": "Protein-rich legume widely grown in East Africa.",
+  "diseases": [
+    {
+      "name": "Cowpea Mosaic Virus",
+      "description": "Viral disease reducing growth and yield.",
+      "symptoms": [
+        "mosaic leaves",
+        "leaf distortion",
+        "stunted growth"
+      ],
+      "severity": "high",
+      "organic_treatment": "Remove infected plants.",
+      "chemical_treatment": "Control insect vectors.",
+      "prevention_tips": "Use resistant varieties."
+    },
+    {
+      "name": "Brown Blotch",
+      "description": "Fungal disease causing dark lesions on leaves.",
+      "symptoms": [
+        "brown spots",
+        "leaf lesions",
+        "yellow leaves"
+      ],
+      "severity": "medium",
+      "organic_treatment": "Remove infected debris.",
+      "chemical_treatment": "Apply approved fungicides.",
+      "prevention_tips": "Practice crop rotation."
+    }
+  ]
+}
