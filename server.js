@@ -58,37 +58,54 @@ try {
 function offlineDiagnosis(category, symptoms) {
   return {
     diagnosis_name: "Offline Diagnosis",
-    confidence: "medium",
-    severity: "moderate",
+    confidence: "low",
+    confidence_score: 20,
+    severity: "unknown",
     explanation: `Offline analysis for ${category}: ${symptoms}`,
     organic_treatment: "Inspect affected area, remove damaged parts.",
     chemical_treatment: "Use local treatment if needed.",
     prevention_tips: "Monitor regularly and maintain hygiene.",
+    top_matches: [],
   };
+}
+
+function normaliseText(text) {
+  return String(text || "")
+    .toLowerCase()
+    .replace(/[^\w\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function getSearchWords(category, symptoms) {
+  return normaliseText(`${category} ${symptoms}`)
+    .split(" ")
+    .filter((word) => word.length > 3);
 }
 
 function findPlantMatches(category, symptoms) {
   const plants = plantDatabase.plants || {};
-  const searchText = `${category} ${symptoms}`.toLowerCase();
+  const searchText = normaliseText(`${category} ${symptoms}`);
 
   const matches = Object.entries(plants)
     .filter(([plantKey, plant]) => {
-      const plantText = [
-        plantKey,
-        plant.common_name,
-        ...(plant.crop_aliases || []),
-        plant.family,
-        plant.description,
-        ...(plant.diseases || []).map((disease) => disease.name),
-        ...(plant.diseases || []).map((disease) => disease.description),
-        ...(plant.diseases || []).flatMap((disease) => disease.symptoms || []),
-      ]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase();
+      const plantText = normaliseText(
+        [
+          plantKey,
+          plant.common_name,
+          ...(plant.crop_aliases || []),
+          plant.family,
+          plant.description,
+          ...(plant.diseases || []).map((disease) => disease.name),
+          ...(plant.diseases || []).map((disease) => disease.description),
+          ...(plant.diseases || []).flatMap((disease) => disease.symptoms || []),
+        ]
+          .filter(Boolean)
+          .join(" ")
+      );
 
       return searchText
-        .split(/\s+/)
+        .split(" ")
         .some((word) => word.length > 3 && plantText.includes(word));
     })
     .slice(0, 5)
@@ -104,17 +121,9 @@ function findPlantMatches(category, symptoms) {
   return matches;
 }
 
-function findBestDiseaseMatch(category, symptoms) {
-  const plants = plantDatabase.plants || {};
-  const searchWords = `${category} ${symptoms}`
-    .toLowerCase()
-    .split(/\s+/)
-    .filter((word) => word.length > 3);
-
-  let bestMatch = null;
-
-  for (const [plantKey, plant] of Object.entries(plants)) {
-    const plantWords = [
+function scoreDiseaseMatch(plantKey, plant, disease, searchWords) {
+  const plantWords = normaliseText(
+    [
       plantKey,
       plant.common_name,
       ...(plant.crop_aliases || []),
@@ -123,73 +132,106 @@ function findBestDiseaseMatch(category, symptoms) {
     ]
       .filter(Boolean)
       .join(" ")
-      .toLowerCase();
+  );
 
-    const plantNameMatched = searchWords.some((word) =>
-      plantWords.includes(word)
-    );
+  const diseaseName = normaliseText(disease.name);
+  const diseaseDescription = normaliseText(disease.description);
+  const diseaseSymptoms = (disease.symptoms || []).map((symptom) =>
+    normaliseText(symptom)
+  );
 
+  const plantNameMatched = searchWords.some((word) => plantWords.includes(word));
+
+  const matchedSymptoms = diseaseSymptoms.filter((symptom) =>
+    searchWords.some((word) => symptom.includes(word))
+  );
+
+  const matchedDiseaseWords = searchWords.filter(
+    (word) => diseaseName.includes(word) || diseaseDescription.includes(word)
+  );
+
+  let score = 0;
+
+  if (plantNameMatched) {
+    score += 30;
+  }
+
+  score += matchedSymptoms.length * 25;
+  score += matchedDiseaseWords.length * 10;
+
+  const uniqueMatchedWords = [
+    ...new Set([
+      ...matchedDiseaseWords,
+      ...matchedSymptoms.flatMap((symptom) => symptom.split(" ")),
+    ]),
+  ].filter((word) => searchWords.includes(word));
+
+  if (uniqueMatchedWords.length >= 3) {
+    score += 10;
+  }
+
+  const confidenceScore = Math.min(95, score);
+
+  if (confidenceScore <= 0) {
+    return null;
+  }
+
+  return {
+    plant_key: plantKey,
+    plant_common_name: plant.common_name,
+    crop_aliases: plant.crop_aliases || [],
+    diagnosis_name: disease.name,
+    confidence_score: confidenceScore,
+    confidence:
+      confidenceScore >= 75
+        ? "high"
+        : confidenceScore >= 45
+        ? "medium"
+        : "low",
+    severity: disease.severity || "moderate",
+    explanation: `Based on the crop and symptoms provided, this matches ${disease.name}. ${disease.description}`,
+    organic_treatment:
+      disease.organic_treatment ||
+      "Remove badly affected parts and improve crop hygiene.",
+    chemical_treatment:
+      disease.chemical_treatment ||
+      "Consult a local agricultural supplier for approved treatment.",
+    prevention_tips:
+      disease.prevention_tips ||
+      "Monitor regularly and use healthy planting material.",
+    matched_symptoms: matchedSymptoms,
+    matched_words: uniqueMatchedWords,
+  };
+}
+
+function findTopDiseaseMatches(category, symptoms) {
+  const plants = plantDatabase.plants || {};
+  const searchWords = getSearchWords(category, symptoms);
+  const matches = [];
+
+  for (const [plantKey, plant] of Object.entries(plants)) {
     for (const disease of plant.diseases || []) {
-      const diseaseText = [
-        disease.name,
-        disease.description,
-        ...(disease.symptoms || []),
-      ]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase();
+      const match = scoreDiseaseMatch(plantKey, plant, disease, searchWords);
 
-      const matchedWords = searchWords.filter((word) =>
-        diseaseText.includes(word)
-      );
-
-      let score = matchedWords.length;
-
-      if (plantNameMatched) {
-        score += 2;
-      }
-
-      if (score > 0) {
-        const confidenceScore = Math.min(95, Math.round((score / 6) * 100));
-
-        const match = {
-          plant_key: plantKey,
-          plant_common_name: plant.common_name,
-          crop_aliases: plant.crop_aliases || [],
-          diagnosis_name: disease.name,
-          confidence_score: confidenceScore,
-          confidence:
-            confidenceScore >= 70
-              ? "high"
-              : confidenceScore >= 40
-              ? "medium"
-              : "low",
-          severity: disease.severity || "moderate",
-          explanation: `Based on your crop and symptoms, this matches ${disease.name} in the plant database. ${disease.description}`,
-          organic_treatment:
-            disease.organic_treatment ||
-            "Remove badly affected parts and improve crop hygiene.",
-          chemical_treatment:
-            disease.chemical_treatment ||
-            "Consult a local agricultural supplier for approved treatment.",
-          prevention_tips:
-            disease.prevention_tips ||
-            "Monitor regularly and use healthy planting material.",
-          matched_symptoms: matchedWords,
-        };
-
-        if (!bestMatch || match.confidence_score > bestMatch.confidence_score) {
-          bestMatch = match;
-        }
+      if (match) {
+        matches.push(match);
       }
     }
   }
 
-  return bestMatch;
+  return matches
+    .sort((a, b) => b.confidence_score - a.confidence_score)
+    .slice(0, 3);
+}
+
+function findBestDiseaseMatch(category, symptoms) {
+  const topMatches = findTopDiseaseMatches(category, symptoms);
+  return topMatches[0] || null;
 }
 
 function databaseDiagnosis(category, symptoms) {
-  const bestMatch = findBestDiseaseMatch(category, symptoms);
+  const topMatches = findTopDiseaseMatches(category, symptoms);
+  const bestMatch = topMatches[0];
 
   if (!bestMatch) {
     return offlineDiagnosis(category, symptoms);
@@ -198,11 +240,20 @@ function databaseDiagnosis(category, symptoms) {
   return {
     diagnosis_name: bestMatch.diagnosis_name,
     confidence: bestMatch.confidence,
+    confidence_score: bestMatch.confidence_score,
     severity: bestMatch.severity,
     explanation: bestMatch.explanation,
     organic_treatment: bestMatch.organic_treatment,
     chemical_treatment: bestMatch.chemical_treatment,
     prevention_tips: bestMatch.prevention_tips,
+    top_matches: topMatches.map((match) => ({
+      diagnosis_name: match.diagnosis_name,
+      plant_common_name: match.plant_common_name,
+      confidence: match.confidence,
+      confidence_score: match.confidence_score,
+      severity: match.severity,
+      matched_symptoms: match.matched_symptoms,
+    })),
   };
 }
 
@@ -213,16 +264,19 @@ app.post("/api/diagnose", async (req, res) => {
     return res.json({
       diagnosis_name: "Invalid Input",
       confidence: "low",
+      confidence_score: 0,
       severity: "low",
       explanation: "Missing category or symptoms.",
       organic_treatment: "",
       chemical_treatment: "",
       prevention_tips: "",
+      top_matches: [],
     });
   }
 
   const databaseMatches = findPlantMatches(category, symptoms);
-  const bestDatabaseMatch = findBestDiseaseMatch(category, symptoms);
+  const topDatabaseMatches = findTopDiseaseMatches(category, symptoms);
+  const bestDatabaseMatch = topDatabaseMatches[0] || null;
 
   const prompt = `
 You are an expert agricultural assistant.
@@ -235,6 +289,9 @@ ${symptoms}
 Best database disease match:
 ${JSON.stringify(bestDatabaseMatch, null, 2)}
 
+Top database disease matches:
+${JSON.stringify(topDatabaseMatches, null, 2)}
+
 Relevant plant database matches:
 ${JSON.stringify(databaseMatches, null, 2)}
 
@@ -246,11 +303,13 @@ Return ONLY valid JSON:
 {
   "diagnosis_name": "",
   "confidence": "",
+  "confidence_score": 0,
   "severity": "",
   "explanation": "",
   "organic_treatment": "",
   "chemical_treatment": "",
-  "prevention_tips": ""
+  "prevention_tips": "",
+  "top_matches": []
 }
 `;
 
@@ -286,12 +345,22 @@ Return ONLY valid JSON:
       result = {
         diagnosis_name: "AI Response",
         confidence: "medium",
+        confidence_score: bestDatabaseMatch?.confidence_score || 50,
         severity: "moderate",
         explanation: text,
         organic_treatment: "See explanation.",
         chemical_treatment: "Consult supplier.",
         prevention_tips: "Monitor regularly.",
+        top_matches: topDatabaseMatches,
       };
+    }
+
+    if (!result.top_matches || result.top_matches.length === 0) {
+      result.top_matches = topDatabaseMatches;
+    }
+
+    if (!result.confidence_score && bestDatabaseMatch?.confidence_score) {
+      result.confidence_score = bestDatabaseMatch.confidence_score;
     }
 
     return res.json(result);
