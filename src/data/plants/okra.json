@@ -1,0 +1,24 @@
+{
+  "common_name": "Okra",
+  "crop_aliases": [
+    "okra",
+    "lady finger"
+  ],
+  "family": "Malvaceae",
+  "description": "Heat-tolerant vegetable crop grown in tropical climates.",
+  "diseases": [
+    {
+      "name": "Yellow Vein Mosaic Virus",
+      "description": "Serious viral disease reducing yield.",
+      "symptoms": [
+        "yellow veins",
+        "leaf yellowing",
+        "stunted growth"
+      ],
+      "severity": "high",
+      "organic_treatment": "Remove infected plants.",
+      "chemical_treatment": "Control whiteflies.",
+      "prevention_tips": "Use resistant varieties."
+    }
+  ]
+}

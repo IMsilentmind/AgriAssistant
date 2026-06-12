@@ -1,0 +1,24 @@
+{
+  "common_name": "Carrot",
+  "crop_aliases": [
+    "carrot",
+    "carrots"
+  ],
+  "family": "Apiaceae",
+  "description": "Root vegetable widely cultivated in East Africa.",
+  "diseases": [
+    {
+      "name": "Alternaria Leaf Blight",
+      "description": "Fungal disease causing dark leaf lesions.",
+      "symptoms": [
+        "brown leaf spots",
+        "yellow leaves",
+        "leaf dieback"
+      ],
+      "severity": "medium",
+      "organic_treatment": "Remove infected foliage.",
+      "chemical_treatment": "Apply approved fungicides.",
+      "prevention_tips": "Practice crop rotation."
+    }
+  ]
+}

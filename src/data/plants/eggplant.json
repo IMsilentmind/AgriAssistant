@@ -1,0 +1,25 @@
+{
+  "common_name": "Eggplant",
+  "crop_aliases": [
+    "eggplant",
+    "aubergine",
+    "biringanya"
+  ],
+  "family": "Solanaceae",
+  "description": "Vegetable crop widely grown in East Africa.",
+  "diseases": [
+    {
+      "name": "Verticillium Wilt",
+      "description": "Soil-borne disease causing wilting and yellowing.",
+      "symptoms": [
+        "wilting",
+        "yellow leaves",
+        "stunted growth"
+      ],
+      "severity": "high",
+      "organic_treatment": "Remove infected plants.",
+      "chemical_treatment": "No effective cure.",
+      "prevention_tips": "Practice crop rotation."
+    }
+  ]
+}

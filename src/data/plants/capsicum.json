@@ -1,0 +1,26 @@
+{
+  "common_name": "Capsicum",
+  "crop_aliases": [
+    "capsicum",
+    "pepper",
+    "sweet pepper",
+    "pilipili hoho"
+  ],
+  "family": "Solanaceae",
+  "description": "Commercial vegetable crop grown in open fields and greenhouses.",
+  "diseases": [
+    {
+      "name": "Bacterial Spot",
+      "description": "Disease causing leaf spots and fruit lesions.",
+      "symptoms": [
+        "leaf spots",
+        "fruit lesions",
+        "yellow leaves"
+      ],
+      "severity": "high",
+      "organic_treatment": "Remove infected plants.",
+      "chemical_treatment": "Use approved bactericides.",
+      "prevention_tips": "Use disease-free seedlings."
+    }
+  ]
+}

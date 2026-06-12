@@ -1,0 +1,24 @@
+{
+  "common_name": "Watermelon",
+  "crop_aliases": [
+    "watermelon",
+    "tikiti maji"
+  ],
+  "family": "Cucurbitaceae",
+  "description": "Fruit crop widely grown in warm regions.",
+  "diseases": [
+    {
+      "name": "Fusarium Wilt",
+      "description": "Soil-borne disease causing wilting and plant death.",
+      "symptoms": [
+        "wilting",
+        "yellow leaves",
+        "vine collapse"
+      ],
+      "severity": "high",
+      "organic_treatment": "Remove infected plants.",
+      "chemical_treatment": "No reliable cure.",
+      "prevention_tips": "Use resistant varieties and crop rotation."
+    }
+  ]
+}
